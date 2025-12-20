@@ -1,0 +1,8 @@
+{
+  "name": "DULA FF - Ultimate Gaming Gear",
+  "description": "A high-performance gaming e-commerce platform featuring an AI-powered gaming consultant to help you choose the best hardware.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
