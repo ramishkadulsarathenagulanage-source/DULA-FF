@@ -12,7 +12,6 @@
         .btn { background-color: #45a29e; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 18px; width: 100%; margin-top: 10px; }
         .btn:hover { background-color: #66fcf1; color: black; box-shadow: 0 0 15px #66fcf1; }
         #result-display { color: #fff; font-size: 32px; font-weight: bold; letter-spacing: 3px; margin: 20px 0; display: none; background: #000; padding: 15px; border: 2px dashed #66fcf1; border-radius: 10px; }
-        .ad-slot { margin: 20px auto; min-height: 100px; display: flex; justify-content: center; align-items: center; }
         .wa-btn { background-color: #25D366; color: white; padding: 12px; border-radius: 8px; text-decoration: none; display: block; margin-top: 15px; font-weight: bold; border: 2px solid #fff; }
     </style>
 </head>
@@ -24,7 +23,7 @@
 </header>
 
 <div class="container">
-    <div class="ad-slot">
+    <div style="margin: 20px auto; min-height: 100px;">
         <script async="async" data-cfasync="false" src="https://pl28496954.effectivegatecpm.com/c72c4d914246df28737bc2e35873c15c/invoke.js"></script>
         <div id="container-c72c4d914246df28737bc2e35873c15c"></div>
     </div>
@@ -40,7 +39,7 @@
             <button class="btn" style="background: #fccb06; color: black;" onclick="copyAndRedirect()">COPY CODE</button>
             <a href="https://reward.ff.garena.com/" target="_blank" style="color: #ff4c4c; font-weight: bold; display: block; margin-top: 15px;">OFFICIAL REDEEM SITE</a>
             
-            <a href="https://chat.whatsapp.com/YOUR_LINK_HERE" target="_blank" class="wa-btn">📢 JOIN WHATSAPP FOR DAILY CODES</a>
+            <a href="https://chat.whatsapp.com/YOUR_WHATSAPP_LINK" target="_blank" class="wa-btn">📢 JOIN WHATSAPP FOR DAILY CODES</a>
         </div>
     </div>
 </div>
@@ -59,7 +58,7 @@
     }, 1000);
 
     async function generateWithAI() {
-        document.getElementById('gen-btn').innerText = "Generating...";
+        document.getElementById('gen-btn').innerText = "Processing...";
         const apiKey = "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";
         
         try {
@@ -68,7 +67,7 @@
                 headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
                 body: JSON.stringify({
                     model: "llama3-8b-8192",
-                    messages: [{ role: "user", content: "Generate one 12-character alphanumeric code. Only code." }]
+                    messages: [{ role: "user", content: "Generate one 12-character code. Only code." }]
                 })
             });
 
@@ -93,10 +92,10 @@
     function copyAndRedirect() {
         const code = document.getElementById('result-display').textContent;
         navigator.clipboard.writeText(code);
-        alert("Code Copied: " + code);
+        alert("Code Copied!");
         
-        // Adsterra Smartlink
-        window.open("https://www.effectivegatecpm.com/xapdswcmy7?key=703a089fbcff863297ef4a0f35ff83c5", "_blank");
+        // Monetag Smartlink
+        window.open("https://otieu.com/4/10477939", "_blank");
     }
 </script>
 </body>
