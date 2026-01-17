@@ -13,7 +13,8 @@
         .btn:hover { background-color: #66fcf1; color: black; box-shadow: 0 0 15px #66fcf1; }
         #result-display { color: #fff; font-size: 32px; font-weight: bold; letter-spacing: 3px; margin: 20px 0; display: none; background: #000; padding: 15px; border: 2px dashed #66fcf1; border-radius: 10px; }
         .loading { color: #fccb06; display: none; margin: 20px 0; font-style: italic; }
-        .ad-slot { margin: 20px auto; min-height: 100px; display: flex; justify-content: center; align-items: center; }
+        .ad-slot { margin: 20px auto; min-height: 100px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .redeem-link { color: #ff4c4c; font-weight: bold; text-decoration: underline; font-size: 18px; display: block; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -41,21 +42,21 @@
         <div id="redeem-section" style="display: none; margin-top: 20px;">
             <button class="btn" style="background: #fccb06; color: black;" onclick="copyCode()">COPY CODE</button>
             <p style="color:#fff; margin-top:15px;">Redeem your code here:</p>
-            <a href="https://reward.ff.garena.com/" target="_blank" style="color: #ff4c4c; font-weight: bold; text-decoration: underline; font-size: 18px;">OFFICIAL REDEEM SITE</a>
+            <a href="https://reward.ff.garena.com/" target="_blank" class="redeem-link">OFFICIAL REDEEM SITE</a>
         </div>
-    </div>
-
-    <div class="ad-slot">
-        <div id="container-c72c4d914246df28737bc2e35873c15c"></div>
+        
+        <p style="font-size: 14px; color: #45a29e; margin-top: 15px;">Server Status: <span style="color: #00ff00;">Online</span></p>
     </div>
 
 </div>
 
 <script>
+    // 1. Timer Logic
     let timeLeft = 30;
     const timerInterval = setInterval(() => {
         timeLeft--;
-        document.getElementById('seconds').textContent = timeLeft;
+        const secondsSpan = document.getElementById('seconds');
+        if(secondsSpan) secondsSpan.textContent = timeLeft;
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
             document.getElementById('timer-text').style.display = 'none';
@@ -63,6 +64,7 @@
         }
     }, 1000);
 
+    // 2. AI Generation
     async function generateWithAI() {
         document.getElementById('gen-btn').style.display = 'none';
         document.getElementById('loader').style.display = 'block';
@@ -109,9 +111,9 @@
     }
 
     function copyCode() {
-        const code = document.getElementById('result-display').textContent;
-        navigator.clipboard.writeText(code);
-        alert("Code Copied: " + code);
+        const codeText = document.getElementById('result-display').textContent;
+        navigator.clipboard.writeText(codeText);
+        alert("Code Copied: " + codeText);
     }
 </script>
 
