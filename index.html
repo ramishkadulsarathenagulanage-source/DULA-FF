@@ -6,12 +6,13 @@
     <title>DULA FF - AI Pro Generator</title>
     <style>
         body { background-color: #0b0c10; color: #66fcf1; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
-        header { background: linear-gradient(90deg, #1f2833, #45a29e); padding: 40px 20px; }
+        header { background: linear-gradient(90deg, #1f2833, #45a29e); padding: 40px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .container { padding: 20px; }
-        .gen-card { background: #1f2833; padding: 25px; border-radius: 20px; border: 2px solid #45a29e; max-width: 500px; margin: 20px auto; }
-        .btn { background-color: #45a29e; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; width: 100%; margin-top: 10px; }
+        .gen-card { background: #1f2833; padding: 25px; border-radius: 20px; border: 2px solid #45a29e; max-width: 500px; margin: 20px auto; box-shadow: 0 0 25px rgba(69, 162, 158, 0.3); }
+        .btn { background-color: #45a29e; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 18px; width: 100%; margin-top: 10px; }
+        .btn:hover { background-color: #66fcf1; color: black; box-shadow: 0 0 15px #66fcf1; }
         #result-display { color: #fff; font-size: 32px; font-weight: bold; letter-spacing: 3px; margin: 20px 0; display: none; background: #000; padding: 15px; border: 2px dashed #66fcf1; border-radius: 10px; }
-        .ad-slot { margin: 20px auto; min-height: 100px; }
+        .ad-slot { margin: 20px auto; min-height: 100px; display: flex; justify-content: center; align-items: center; }
         .wa-btn { background-color: #25D366; color: white; padding: 12px; border-radius: 8px; text-decoration: none; display: block; margin-top: 15px; font-weight: bold; border: 2px solid #fff; }
     </style>
 </head>
@@ -29,70 +30,37 @@
     </div>
 
     <div class="gen-card">
-        <h2>🎁 FF Reward Generator</h2>
-        <p id="timer-text">Wait <span id="seconds">30</span>s for AI...</p>
+        <h2 style="color: #fff;">🎁 FF Reward Generator</h2>
+        <p id="timer-text">Initializing AI... Please wait <span id="seconds" style="color:#ff4c4c; font-weight:bold;">30</span>s</p>
         
         <button id="gen-btn" class="btn" style="display: none;" onclick="generateWithAI()">GENERATE CODE</button>
         <div id="result-display"></div>
         
-        <div id="action-box" style="display: none;">
-            <button class="btn" style="background: #fccb06; color: black;" onclick="copyCode()">COPY CODE</button>
-            <a href="https://reward.ff.garena.com/" target="_blank" style="color: #ff4c4c; display: block; margin-top: 15px; font-weight: bold;">OFFICIAL REDEEM SITE</a>
+        <div id="action-section" style="display: none; margin-top: 20px;">
+            <button class="btn" style="background: #fccb06; color: black;" onclick="copyAndRedirect()">COPY CODE</button>
+            <a href="https://reward.ff.garena.com/" target="_blank" style="color: #ff4c4c; font-weight: bold; display: block; margin-top: 15px;">OFFICIAL REDEEM SITE</a>
             
-            <a href="ඔයාගේ_WHATSAPP_LINK_එක_මෙතනට" target="_blank" class="wa-btn">📢 JOIN WHATSAPP FOR DAILY CODES</a>
+            <a href="https://chat.whatsapp.com/YOUR_LINK_HERE" target="_blank" class="wa-btn">📢 JOIN WHATSAPP FOR DAILY CODES</a>
         </div>
     </div>
 </div>
 
 <script>
     let timeLeft = 30;
-    const timer = setInterval(() => {
+    const timerInterval = setInterval(() => {
         timeLeft--;
-        document.getElementById('seconds').textContent = timeLeft;
+        const secondsSpan = document.getElementById('seconds');
+        if(secondsSpan) secondsSpan.textContent = timeLeft;
         if (timeLeft <= 0) {
-            clearInterval(timer);
+            clearInterval(timerInterval);
             document.getElementById('timer-text').style.display = 'none';
             document.getElementById('gen-btn').style.display = 'block';
         }
     }, 1000);
 
     async function generateWithAI() {
+        document.getElementById('gen-btn').innerText = "Generating...";
         const apiKey = "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";
-        try {
-            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                method: "POST",
-                headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    model: "llama3-8b-8192",
-                    messages: [{ role: "user", content: "Generate one 12-character code. Only code." }]
-                })
-            });
-            const data = await response.json();
-            let aiCode = data.choices[0].message.content.trim().toUpperCase().replace(/[^A-Z0-9]/g, "").substring(0, 12);
-            const finalCode = aiCode.match(/.{1,4}/g).join('-');
-            document.getElementById('result-display').textContent = finalCode;
-            document.getElementById('result-display').style.display = 'block';
-            document.getElementById('action-box').style.display = 'block';
-            document.getElementById('gen-btn').style.display = 'none';
-        } catch (e) {
-            let c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            let code = "";
-            for (let i=0; i<12; i++) { if(i>0 && i%4===0) code+="-"; code+=c[Math.floor(Math.random()*36)]; }
-            document.getElementById('result-display').textContent = code;
-            document.getElementById('result-display').style.display = 'block';
-            document.getElementById('action-box').style.display = 'block';
-            document.getElementById('gen-btn').style.display = 'none';
-        }
-    }
-
-    function copyCode() {
-        const text = document.getElementById('result-display').textContent;
-        navigator.clipboard.writeText(text);
-        alert("Code Copied!");
-    }
-</script>
-</body>
-</html>
         
         try {
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -113,7 +81,6 @@
             document.getElementById('result-display').style.display = 'block';
             document.getElementById('action-section').style.display = 'block';
         } catch (error) {
-            // Backup
             let c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; let code = "";
             for (let i=0; i<12; i++) { if(i>0 && i%4===0) code+="-"; code+=c[Math.floor(Math.random()*36)]; }
             document.getElementById('gen-btn').style.display = 'none';
@@ -128,103 +95,9 @@
         navigator.clipboard.writeText(code);
         alert("Code Copied: " + code);
         
-        // Adsterra Smartlink (Direct Link)
+        // Adsterra Smartlink
         window.open("https://www.effectivegatecpm.com/xapdswcmy7?key=703a089fbcff863297ef4a0f35ff83c5", "_blank");
     }
 </script>
-
-</body>
-</html>
-                headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    model: "llama3-8b-8192",
-                    messages: [{ role: "user", content: "Generate one 12-character code. Only code." }]
-                })
-            });
-            const data = await response.json();
-            let aiCode = data.choices[0].message.content.trim().toUpperCase().replace(/[^A-Z0-9]/g, "").substring(0, 12);
-            const finalCode = aiCode.match(/.{1,4}/g).join('-');
-            document.getElementById('result-display').textContent = finalCode;
-            document.getElementById('result-display').style.display = 'block';
-            document.getElementById('action-box').style.display = 'block';
-            document.getElementById('gen-btn').style.display = 'none';
-        } catch (e) {
-            let c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            let code = "";
-            for (let i=0; i<12; i++) { if(i>0 && i%4===0) code+="-"; code+=c[Math.floor(Math.random()*36)]; }
-            document.getElementById('result-display').textContent = code;
-            document.getElementById('result-display').style.display = 'block';
-            document.getElementById('action-box').style.display = 'block';
-            document.getElementById('gen-btn').style.display = 'none';
-        }
-    }
-
-    function copyCode() {
-        const text = document.getElementById('result-display').textContent;
-        navigator.clipboard.writeText(text);
-        alert("Code Copied!");
-    }
-</script>
-</body>
-</html>
-            clearInterval(timerInterval);
-            document.getElementById('timer-text').style.display = 'none';
-            document.getElementById('gen-btn').style.display = 'block';
-        }
-    }, 1000);
-
-    // 2. AI Generation
-    async function generateWithAI() {
-        document.getElementById('gen-btn').style.display = 'none';
-        document.getElementById('loader').style.display = 'block';
-        document.getElementById('result-display').style.display = 'none';
-        document.getElementById('redeem-section').style.display = 'none';
-
-        const apiKey = "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";
-        
-        try {
-            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                method: "POST",
-                headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    model: "llama3-8b-8192",
-                    messages: [{ role: "user", content: "Generate one random 12-character alphanumeric code. Only give the code." }]
-                })
-            });
-
-            const data = await response.json();
-            let aiCode = data.choices[0].message.content.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
-            if(aiCode.length > 12) aiCode = aiCode.substring(0, 12);
-            const finalCode = aiCode.match(/.{1,4}/g).join('-');
-
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('result-display').textContent = finalCode;
-            document.getElementById('result-display').style.display = 'block';
-            document.getElementById('redeem-section').style.display = 'block';
-        } catch (error) {
-            showBackupCode();
-        }
-    }
-
-    function showBackupCode() {
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        let code = "";
-        for (let i = 0; i < 12; i++) {
-            if (i > 0 && i % 4 === 0) code += "-";
-            code += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        document.getElementById('loader').style.display = 'none';
-        document.getElementById('result-display').textContent = code;
-        document.getElementById('result-display').style.display = 'block';
-        document.getElementById('redeem-section').style.display = 'block';
-    }
-
-    function copyCode() {
-        const codeText = document.getElementById('result-display').textContent;
-        navigator.clipboard.writeText(codeText);
-        alert("Code Copied: " + codeText);
-    }
-</script>
-
 </body>
 </html>
