@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="monetag" content="0763c3d6670ac4416b64063fc6b56bf7">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DULA FF - AI Pro Generator</title>
@@ -39,7 +41,7 @@
             <button class="btn" style="background: #fccb06; color: black;" onclick="copyAndRedirect()">COPY CODE</button>
             <a href="https://reward.ff.garena.com/" target="_blank" style="color: #ff4c4c; font-weight: bold; display: block; margin-top: 15px;">OFFICIAL REDEEM SITE</a>
             
-            <a href="https://chat.whatsapp.com/YOUR_WHATSAPP_LINK" target="_blank" class="wa-btn">📢 JOIN WHATSAPP FOR DAILY CODES</a>
+            <a href="https://chat.whatsapp.com/YOUR_LINK_HERE" target="_blank" class="wa-btn">📢 JOIN WHATSAPP FOR DAILY CODES</a>
         </div>
     </div>
 </div>
@@ -61,6 +63,45 @@
         document.getElementById('gen-btn').innerText = "Processing...";
         const apiKey = "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";
         
+        try {
+            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    model: "llama3-8b-8192",
+                    messages: [{ role: "user", content: "Generate one 12-character code. Only code." }]
+                })
+            });
+
+            const data = await response.json();
+            let aiCode = data.choices[0].message.content.trim().toUpperCase().replace(/[^A-Z0-9]/g, "").substring(0, 12);
+            const finalCode = aiCode.match(/.{1,4}/g).join('-');
+
+            document.getElementById('gen-btn').style.display = 'none';
+            document.getElementById('result-display').textContent = finalCode;
+            document.getElementById('result-display').style.display = 'block';
+            document.getElementById('action-section').style.display = 'block';
+        } catch (error) {
+            let c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; let code = "";
+            for (let i=0; i<12; i++) { if(i>0 && i%4===0) code+="-"; code+=c[Math.floor(Math.random()*36)]; }
+            document.getElementById('gen-btn').style.display = 'none';
+            document.getElementById('result-display').textContent = code;
+            document.getElementById('result-display').style.display = 'block';
+            document.getElementById('action-section').style.display = 'block';
+        }
+    }
+
+    function copyAndRedirect() {
+        const code = document.getElementById('result-display').textContent;
+        navigator.clipboard.writeText(code);
+        alert("Code Copied!");
+        
+        // Monetag Smartlink (Higher CPM)
+        window.open("https://otieu.com/4/10477939", "_blank");
+    }
+</script>
+</body>
+</html>
         try {
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: "POST",
