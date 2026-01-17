@@ -3,64 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DULA FF - Code Generator</title>
+    <title>DULA FF - Pro Code Generator</title>
     <style>
         body { background-color: #0b0c10; color: #66fcf1; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
         header { background: linear-gradient(90deg, #1f2833, #45a29e); padding: 50px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .container { padding: 30px; }
-        .giveaway-box { background: #1f2833; padding: 25px; border-radius: 15px; border: 2px solid #45a29e; max-width: 450px; margin: 20px auto; box-shadow: 0 0 20px rgba(69, 162, 158, 0.2); }
-        .btn { background-color: #45a29e; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 16px; }
-        .btn:hover { background-color: #66fcf1; color: black; }
-        #generated-code { color: #fff; font-size: 28px; font-weight: bold; letter-spacing: 2px; margin: 15px 0; display: none; background: rgba(0,0,0,0.3); padding: 10px; border: 1px dashed #66fcf1; }
-        .loading { color: #fccb06; font-style: italic; display: none; }
+        .gen-card { background: #1f2833; padding: 30px; border-radius: 20px; border: 2px solid #45a29e; max-width: 500px; margin: 20px auto; box-shadow: 0 0 25px rgba(69, 162, 158, 0.3); }
+        .btn { background-color: #45a29e; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 18px; text-transform: uppercase; }
+        .btn:hover { background-color: #66fcf1; color: black; box-shadow: 0 0 15px #66fcf1; }
+        .btn:disabled { background-color: #333; cursor: not-allowed; color: #777; }
+        #result-display { color: #fff; font-size: 32px; font-weight: bold; letter-spacing: 3px; margin: 20px 0; display: none; background: #0b0c10; padding: 15px; border: 2px dashed #66fcf1; border-radius: 10px; }
+        .status-msg { color: #45a29e; font-size: 14px; margin-top: 10px; }
+        .progress-bar { width: 0%; height: 5px; background: #66fcf1; transition: width 0.1s; margin-top: 10px; border-radius: 5px; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>DULA FF GAMING</h1>
-    <p>Daily Redeem Code Generator</p>
+    <p>AI Powered 12-Digit Redeem Code Generator</p>
 </header>
 
 <div class="container">
-    <div class="giveaway-box">
-        <h3>🎁 Get Your Redeem Code</h3>
+    <div class="gen-card">
+        <h2 style="color: #fff;">🎁 FF Reward Generator</h2>
         
-        <p id="timer-text">Please wait <span id="seconds" style="font-weight: bold; color: #ff4c4c;">30</span> seconds to activate generator...</p>
+        <div id="timer-box">
+            <p>System Initializing...</p>
+            <p>Please wait <span id="seconds" style="font-size: 24px; color: #ff4c4c;">30</span> seconds</p>
+        </div>
 
-        <button id="gen-btn" class="btn" style="display: none;" onclick="generateNow()">GENERATE CODE</button>
+        <button id="gen-btn" class="btn" style="display: none;" onclick="startGeneration()">Generate 12-Digit Code</button>
         
-        <p id="loading-text" class="loading">Generating... Please wait...</p>
+        <div id="loader" style="display: none; margin-top: 20px;">
+            <p id="load-text">Connecting to Server...</p>
+            <div style="width: 100%; background: #000; height: 5px; border-radius: 5px;">
+                <div id="bar" class="progress-bar"></div>
+            </div>
+        </div>
+
+        <div id="result-display"></div>
         
-        <div id="generated-code"></div>
+        <button id="copy-btn" class="btn" style="display: none; margin-top: 10px; background: #fccb06; color: black;" onclick="copyCode()">Copy Code</button>
         
-        <button id="copy-btn" class="btn" style="display: none; margin-top: 10px; background: #66fcf1; color: black;" onclick="copyToClipboard()">COPY & REDEEM</button>
+        <p class="status-msg">Server Status: <span style="color: #00ff00;">Online</span></p>
     </div>
 </div>
 
 <script>
     let timeLeft = 30;
-    const timerSpan = document.getElementById('seconds');
-    const timerText = document.getElementById('timer-text');
+    const timerBox = document.getElementById('timer-box');
     const genBtn = document.getElementById('gen-btn');
-    const loadingText = document.getElementById('loading-text');
-    const codeDisplay = document.getElementById('generated-code');
+    const loader = document.getElementById('loader');
+    const bar = document.getElementById('bar');
+    const loadText = document.getElementById('load-text');
+    const resultDisplay = document.getElementById('result-display');
     const copyBtn = document.getElementById('copy-btn');
 
-    // 1. Timer Countdown
-    const countdown = setInterval(function() {
+    // 1. Countdown Timer
+    const timerInterval = setInterval(() => {
         timeLeft--;
-        timerSpan.textContent = timeLeft;
+        document.getElementById('seconds').textContent = timeLeft;
         if (timeLeft <= 0) {
-            clearInterval(countdown);
-            timerText.style.display = 'none';
+            clearInterval(timerInterval);
+            timerBox.style.display = 'none';
             genBtn.style.display = 'inline-block';
         }
     }, 1000);
 
-    // 2. Code Generation Logic
-    function generateNow() {
+    // 2. Generation Logic (The "API" Simulation)
+    function startGeneration() {
         genBtn.style.display = 'none';
+        loader.style.display = 'block';
+        let progress = 0;
+        
+        const messages = ["Bypassing Security...", "Accessing Database...", "Injecting Packets...", "Generating 12-Digit Key..."];
+        
+        const progressInterval = setInterval(() => {
+            progress += 1;
+            bar.style.width = progress + "%";
+            
+            if(progress < 30) loadText.textContent = messages[0];
+            else if(progress < 60) loadText.textContent = messages[1];
+            else if(progress < 85) loadText.textContent = messages[2];
+            else loadText.textContent = messages[3];
+
+            if (progress >= 100) {
+                clearInterval(progressInterval);
+                showFinalCode();
+            }
+        }, 50); // වේගය මෙතනින් පාලනය කළ හැක
+    }
+
+    // 3. 12-Digit Generator
+    function showFinalCode() {
+        loader.style.display = 'none';
+        
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let code = "";
+        
+        // අකුරු 12ක් සාදයි (Format: XXXX-XXXX-XXXX)
+        for (let i = 0; i < 12; i++) {
+            if (i > 0 && i % 4 === 0) code += "-";
+            code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        
+        resultDisplay.textContent = code;
+        resultDisplay.style.display = 'block';
+        copyBtn.style.display = 'inline-block';
+    }
+
+    function copyCode() {
+        navigator.clipboard.writeText(resultDisplay.textContent);
+        alert("12-Digit Code Copied Successfully!");
+    }
+</script>
+
+</body>
+</html>
         loadingText.style.display = 'block';
 
         // Fake loading effect for 2 seconds
