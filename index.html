@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DULA FF - Code Generator</title>
     <style>
-        body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 20px; margin: 0; }
-        .box { background: #111; padding: 25px; border-radius: 15px; max-width: 450px; margin: 20px auto; border: 1px solid #ffa500; box-shadow: 0 0 20px rgba(255,165,0,0.2); }
-        h1 { color: #ffa500; margin-bottom: 5px; }
+        body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 20px; }
+        .box { background: #111; padding: 25px; border-radius: 15px; max-width: 450px; margin: auto; border: 1px solid #ffa500; }
         #timer { font-size: 35px; color: #ff4757; margin: 15px; font-weight: bold; }
         #ad-box { min-height: 250px; background: #1a1a1a; margin: 15px 0; border-radius: 10px; padding: 10px; overflow: hidden; border: 1px solid #333; }
-        #result-section { display: none; padding: 20px; background: #1b261e; border-radius: 10px; border: 2px dashed #2ecc71; margin-top: 15px; }
-        .code-display { font-size: 26px; color: #2ecc71; display: block; margin-bottom: 15px; font-weight: bold; letter-spacing: 2px; }
-        .btn { background: #ffa500; color: #000; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin: 5px; font-size: 16px; }
-        .btn:hover { background: #ffc107; }
+        #result-section { display: none; padding: 20px; background: #1b261e; border-radius: 10px; border: 2px dashed #2ecc71; }
+        .code-display { font-size: 26px; color: #2ecc71; display: block; margin-bottom: 15px; font-weight: bold; }
+        .btn { background: #ffa500; color: #000; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin: 5px; }
     </style>
 </head>
 <body>
@@ -45,22 +43,25 @@
     var countdownTimer = setInterval(function() {
         secondsLeft--;
         timerElem.innerHTML = secondsLeft;
-
         if (secondsLeft <= 0) {
             clearInterval(countdownTimer);
             statusElem.innerHTML = "GENERATION COMPLETE! ✅";
-            statusElem.style.color = "#2ecc71";
             timerElem.style.display = 'none';
             resultElem.style.display = 'block';
-            
-            // Generate Random Redeem Code
-            var charset = "ABCDE12345FGHIJ67890KLMNPQRSTUVWXYZ";
-            var generatedCode = "FF";
-            for (var i = 0; i < 10; i++) {
-                generatedCode += charset.charAt(Math.floor(Math.random() * charset.length));
-            }
-            codeElem.innerHTML = generatedCode;
+            codeElem.innerHTML = "FF" + Math.random().toString(36).substring(2, 12).toUpperCase();
         }
+    }, 1000);
+
+    function copyAndDirect() {
+        navigator.clipboard.writeText(codeElem.innerText).then(function() {
+            alert("Code Copied!");
+            window.open("https://www.effectivegatecpm.com/xapdswcmy7?key=703a089fbcff863297ef4a0f35ff83c5", "_blank");
+        });
+    }
+</script>
+
+</body>
+</html>
     }, 1000);
 
     function copyAndDirect() {
