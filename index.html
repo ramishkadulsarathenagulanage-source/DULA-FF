@@ -3,37 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Redeem Code Generator</title>
+    <title>DULA FF - Redeem Code Generator</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f0f12; color: white; text-align: center; padding: 20px; }
-        .container { background: #1c1c21; padding: 30px; border-radius: 15px; max-width: 500px; margin: auto; box-shadow: 0 0 25px rgba(255, 165, 0, 0.2); border: 1px solid #333; }
-        h2 { color: #ffa500; text-transform: uppercase; letter-spacing: 2px; }
-        #timer-box { font-size: 20px; margin: 20px 0; color: #ff4757; font-weight: bold; }
-        #ad-wrapper { background: #25252b; min-height: 250px; padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px solid #444; overflow: hidden; }
-        #redeem-display { display: none; font-size: 26px; color: #2ecc71; background: #1b261e; padding: 20px; border-radius: 10px; border: 2px dashed #2ecc71; margin-top: 20px; animation: fadeIn 1s; }
-        .btn { background: #ffa500; color: black; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; font-weight: bold; margin-top: 10px; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0f0f12; color: white; text-align: center; padding: 20px; }
+        .container { background: #1c1c21; padding: 30px; border-radius: 15px; max-width: 500px; margin: auto; box-shadow: 0 0 25px rgba(255, 165, 0, 0.3); border: 1px solid #333; }
+        h1 { color: #ffa500; font-size: 28px; margin-bottom: 5px; }
+        #timer-box { font-size: 18px; margin: 15px 0; color: #ff4757; font-weight: bold; }
+        #ad-wrapper { background: #25252b; min-height: 200px; padding: 10px; border-radius: 10px; margin: 15px 0; border: 1px solid #444; }
+        #redeem-section { display: none; background: #1b261e; padding: 20px; border-radius: 10px; border: 2px dashed #2ecc71; margin-top: 20px; }
+        #final-code { font-size: 24px; color: #2ecc71; font-weight: bold; display: block; margin-bottom: 15px; }
+        .btn { background: #ffa500; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; text-decoration: none; display: inline-block; margin: 5px; }
+        .btn-copy { background: #2ecc71; }
+        .btn-site { background: #3498db; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>FF Code Generator</h2>
-    <p style="color: #aaa;">Processing your request... Please stay on this page.</p>
+    <h1>DULA FF</h1>
+    <p style="color: #aaa;">Generating your Free Fire Redeem Code...</p>
 
-    <div id="timer-box">CODE GENERATING IN: <span id="seconds">30</span>s</div>
+    <div id="timer-box">PLEASE WAIT: <span id="seconds">30</span>s</div>
 
     <div id="ad-wrapper">
-        <p style="font-size: 11px; color: #666; margin-bottom: 10px;">ADVERTISEMENT</p>
-        
+        <p style="font-size: 10px; color: #555;">ADVERTISEMENT</p>
         <script async="async" data-cfasync="false" src="https://pl28496954.effectivegatecpm.com/c72c4d914246df28737bc2e35873c15c/invoke.js"></script>
         <div id="container-c72c4d914246df28737bc2e35873c15c"></div>
-        
     </div>
-    <div id="redeem-display">
-        <span style="font-size: 16px; color: #aaa;">Your Unique Redeem Code:</span><br>
-        <strong id="final-code"></strong><br>
-        <button class="btn" onclick="location.reload()">Generate Another</button>
+
+    <div id="redeem-section">
+        <span style="color: #aaa;">Your Code:</span>
+        <strong id="final-code"></strong>
+        
+        <button class="btn btn-copy" onclick="copyCode()">COPY CODE</button>
+        <a href="https://reward.ff.garena.com/" target="_blank" class="btn btn-site">GO TO WEBSITE</a>
     </div>
 </div>
 
@@ -41,7 +44,7 @@
     var timeLeft = 30;
     var countdown = document.getElementById('seconds');
     var timerBox = document.getElementById('timer-box');
-    var redeemDisplay = document.getElementById('redeem-display');
+    var redeemSection = document.getElementById('redeem-section');
     var finalCode = document.getElementById('final-code');
 
     var interval = setInterval(function() {
@@ -50,11 +53,11 @@
 
         if (timeLeft <= 0) {
             clearInterval(interval);
-            timerBox.innerHTML = "COMPLETED! ✅";
+            timerBox.innerHTML = "GENERATION COMPLETE! ✅";
             timerBox.style.color = "#2ecc71";
-            redeemDisplay.style.display = "block";
+            redeemSection.style.display = "block";
             
-            // Random Redeem Code Generator
+            // Random Code
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             var code = "FF";
             for (var i = 0; i < 10; i++) {
@@ -63,6 +66,12 @@
             finalCode.textContent = code;
         }
     }, 1000);
+
+    function copyCode() {
+        var text = document.getElementById("final-code").innerText;
+        navigator.clipboard.writeText(text);
+        alert("Code Copied: " + text);
+    }
 </script>
 
 </body>
