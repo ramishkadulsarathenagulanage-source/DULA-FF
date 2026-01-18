@@ -12,7 +12,8 @@
         #ad-wrapper { background: #25252b; min-height: 200px; padding: 10px; border-radius: 10px; margin: 15px 0; border: 1px solid #444; }
         #redeem-section { display: none; background: #1b261e; padding: 20px; border-radius: 10px; border: 2px dashed #2ecc71; margin-top: 20px; }
         #final-code { font-size: 24px; color: #2ecc71; font-weight: bold; display: block; margin-bottom: 15px; }
-        .btn { background: #ffa500; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; text-decoration: none; display: inline-block; margin: 5px; }
+        .btn { background: #ffa500; color: black; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; text-decoration: none; display: inline-block; margin: 5px; transition: 0.3s; }
+        .btn:hover { opacity: 0.8; transform: scale(1.05); }
         .btn-copy { background: #2ecc71; }
         .btn-site { background: #3498db; }
     </style>
@@ -35,7 +36,7 @@
         <span style="color: #aaa;">Your Code:</span>
         <strong id="final-code"></strong>
         
-        <button class="btn btn-copy" onclick="copyCode()">COPY CODE</button>
+        <button class="btn btn-copy" onclick="copyAndRedirect()">COPY CODE</button>
         <a href="https://reward.ff.garena.com/" target="_blank" class="btn btn-site">GO TO WEBSITE</a>
     </div>
 </div>
@@ -47,6 +48,7 @@
     var redeemSection = document.getElementById('redeem-section');
     var finalCode = document.getElementById('final-code');
 
+    // Timer එක පටන් ගැනීම
     var interval = setInterval(function() {
         timeLeft--;
         countdown.textContent = timeLeft;
@@ -57,10 +59,32 @@
             timerBox.style.color = "#2ecc71";
             redeemSection.style.display = "block";
             
-            // Random Code
+            // Random Code එකක් හැදීම
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             var code = "FF";
             for (var i = 0; i < 10; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            finalCode.textContent = code;
+        }
+    }, 1000);
+
+    // Copy කිරීම සහ Direct Link එකට යෑම
+    function copyAndRedirect() {
+        var text = document.getElementById("final-code").innerText;
+        
+        // 1. Code එක කොපි කිරීම
+        navigator.clipboard.writeText(text).then(function() {
+            alert("Code Copied: " + text + "\nNow redirecting to bonus page...");
+            
+            // 2. ඔයාගේ Direct Link එක අලුත් Tab එකක Open කිරීම
+            window.open("https://www.effectivegatecpm.com/xapdswcmy7?key=703a089fbcff863297ef4a0f35ff83c5", "_blank");
+        });
+    }
+</script>
+
+</body>
+</html>
                 code += chars.charAt(Math.floor(Math.random() * chars.length));
             }
             finalCode.textContent = code;
