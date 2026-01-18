@@ -3,64 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DULA FF - Redeem Code Generator</title>
+    <title>DULA FF - Code Generator</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0f0f12; color: white; text-align: center; padding: 20px; }
-        .container { background: #1c1c21; padding: 30px; border-radius: 15px; max-width: 500px; margin: auto; box-shadow: 0 0 25px rgba(255, 165, 0, 0.3); border: 1px solid #333; }
-        h1 { color: #ffa500; font-size: 28px; margin-bottom: 5px; }
-        #timer-box { font-size: 18px; margin: 15px 0; color: #ff4757; font-weight: bold; }
-        #ad-wrapper { background: #25252b; min-height: 200px; padding: 10px; border-radius: 10px; margin: 15px 0; border: 1px solid #444; }
-        #redeem-section { display: none; background: #1b261e; padding: 20px; border-radius: 10px; border: 2px dashed #2ecc71; margin-top: 20px; }
-        #final-code { font-size: 24px; color: #2ecc71; font-weight: bold; display: block; margin-bottom: 15px; }
-        .btn { background: #ffa500; color: black; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; text-decoration: none; display: inline-block; margin: 5px; transition: 0.3s; }
-        .btn:hover { opacity: 0.8; transform: scale(1.05); }
-        .btn-copy { background: #2ecc71; }
-        .btn-site { background: #3498db; }
+        body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 20px; }
+        .box { background: #111; padding: 30px; border-radius: 15px; max-width: 450px; margin: auto; border: 1px solid #ffaa00; }
+        #timer { font-size: 24px; color: #ff4444; margin: 20px; font-weight: bold; }
+        #ad-box { min-height: 250px; background: #1a1a1a; margin: 20px 0; border-radius: 10px; padding: 10px; }
+        #result { display: none; }
+        .code-text { font-size: 28px; color: #00ff00; display: block; margin: 20px; font-weight: bold; border: 2px dashed #00ff00; padding: 10px; }
+        .btn { background: #ffaa00; color: #000; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin: 5px; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="box">
     <h1>DULA FF</h1>
-    <p style="color: #aaa;">Generating your Free Fire Redeem Code...</p>
+    <div id="wait-msg">Please wait 30 seconds...</div>
+    <div id="timer">30</div>
 
-    <div id="timer-box">PLEASE WAIT: <span id="seconds">30</span>s</div>
-
-    <div id="ad-wrapper">
-        <p style="font-size: 10px; color: #555;">ADVERTISEMENT</p>
+    <div id="ad-box">
         <script async="async" data-cfasync="false" src="https://pl28496954.effectivegatecpm.com/c72c4d914246df28737bc2e35873c15c/invoke.js"></script>
         <div id="container-c72c4d914246df28737bc2e35873c15c"></div>
     </div>
 
-    <div id="redeem-section">
-        <span style="color: #aaa;">Your Code:</span>
-        <strong id="final-code"></strong>
-        
-        <button class="btn btn-copy" onclick="copyAndRedirect()">COPY CODE</button>
-        <a href="https://reward.ff.garena.com/" target="_blank" class="btn btn-site">GO TO WEBSITE</a>
+    <div id="result">
+        <span class="code-text" id="final-code"></span>
+        <button class="btn" onclick="copyAndOpen()">COPY CODE</button>
+        <a href="https://reward.ff.garena.com/" target="_blank" class="btn" style="background:#3498db">GO TO SITE</a>
     </div>
 </div>
 
 <script>
-    var timeLeft = 30;
-    var countdown = document.getElementById('seconds');
-    var timerBox = document.getElementById('timer-box');
-    var redeemSection = document.getElementById('redeem-section');
-    var finalCode = document.getElementById('final-code');
-
-    // Timer එක පටන් ගැනීම
-    var interval = setInterval(function() {
-        timeLeft--;
-        countdown.textContent = timeLeft;
-
-        if (timeLeft <= 0) {
-            clearInterval(interval);
-            timerBox.innerHTML = "GENERATION COMPLETE! ✅";
-            timerBox.style.color = "#2ecc71";
-            redeemSection.style.display = "block";
+    var sec = 30;
+    var timer = setInterval(function() {
+        sec--;
+        document.getElementById('timer').innerHTML = sec;
+        if (sec <= 0) {
+            clearInterval(timer);
+            document.getElementById('wait-msg').style.display = 'none';
+            document.getElementById('timer').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
             
-            // Random Code එකක් හැදීම
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var chars = "ABC123XYZ456";
+            var res = "FF";
+            for(var i=0; i<10; i++) res += chars.charAt(Math.floor(Math.random()*chars.length));
+            document.getElementById('final-code').innerHTML = res;
+        }
+    }, 1000);
+
+    function copyAndOpen() {
+        var c = document.getElementById("final-code").innerText;
+        navigator.clipboard.writeText(c);
+        alert("Code Copied!");
+        window.open("https://www.effectivegatecpm.com/xapdswcmy7?key=703a089fbcff863297ef4a0f35ff83c5", "_blank");
+    }
+</script>
+
+</body>
+</html>
             var code = "FF";
             for (var i = 0; i < 10; i++) {
                 code += chars.charAt(Math.floor(Math.random() * chars.length));
